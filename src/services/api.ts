@@ -1,13 +1,15 @@
 import axios from "axios";
 
+const rawApiUrl = import.meta.env.VITE_API_URL;
+console.log("VITE_API_URL actual:", rawApiUrl); // Esto saldrá en la consola del navegador (F12)
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "http://localhost:4000/api",
+  baseURL: rawApiUrl ? `${rawApiUrl}/api` : "http://localhost:4000/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Interceptor para inyectar automáticamente el token JWT en cada petición
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
